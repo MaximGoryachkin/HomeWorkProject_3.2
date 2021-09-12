@@ -11,29 +11,30 @@ struct ContentView: View {
     @State private var redValue = 0.0
     @State private var greenValue = 0.0
     @State private var blueValue = 0.0
-    @State private var redLabel = ""
-    @State private var greenLabel = ""
-    @State private var blueLabel = ""
     @State private var alertPresented = false
     
+    
     var body: some View {
-        VStack {
-            Color(red: redValue / 255.0,
-                  green: greenValue / 255.0,
-                  blue: blueValue / 255.0)
-                .frame(width: 100, height: 100)
-            SettingsView(value: $redValue,
-                         label: $redLabel,
-                         alertPresented: $alertPresented,
-                     color: .red)
-            SettingsView(value: $greenValue,
-                         label: $greenLabel,
-                         alertPresented: $alertPresented,
-                         color: .green)
-            SettingsView(value: $blueValue,
-                         label: $blueLabel,
-                         alertPresented: $alertPresented,
-                         color: .blue)
+        ZStack {
+            Color(#colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1))
+                .ignoresSafeArea()
+            VStack {
+                RoundedRectangle(cornerRadius: 25.0)
+                    .overlay(RoundedRectangle(cornerRadius: 25.0).stroke(Color.white, lineWidth: 4))
+                    .padding()
+                    .frame(height: 200)
+                    .foregroundColor(Color(red: redValue / 255.0, green: greenValue / 255.0, blue: blueValue / 255.0))
+                SettingsView(value: $redValue,
+                             alertPresented: $alertPresented,
+                             color: .red)
+                SettingsView(value: $greenValue,
+                             alertPresented: $alertPresented,
+                             color: .green)
+                SettingsView(value: $blueValue,
+                             alertPresented: $alertPresented,
+                             color: .blue)
+                Spacer()
+            }
         }
     }
 }
@@ -44,22 +45,8 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct SettingView: View {
-    @Binding var colorName: Double
-    @Binding var value: String
-    
-    var body: some View {
-        HStack {
-            Text("\(colorName)")
-            Slider(value: $colorName)
-            
-        }.padding()
-    }
-}
-
 struct SettingsView: View {
     @Binding var value: Double
-    @Binding var label: String
     @Binding var alertPresented: Bool
     let color: Color
     
@@ -67,33 +54,43 @@ struct SettingsView: View {
         HStack {
             Text("\(lround(value))")
                 .frame(width: 40, height: 40)
-            Slider(
-                value: $value,
-                in: 0...255,
-                step: 1)
+                .foregroundColor(.white)
+            Slider(value: $value,
+                   in: 0...255,
+                   step: 1)
+                .animation(.default)
                 .accentColor(color)
-            TextField("000", text: $label, onCommit:  {
-                checkData()
-            })
-            .alert(isPresented: $alertPresented, content: {
-                Alert(title: Text("Wrong format"), message: Text("Enter number from 0 to 255"))
-            })
-            .frame(width: 50, height: 40)
-            .border(Color.black, width: 3)
-        }.padding()
+            TextField("255",
+                      value: $value,
+                      formatter: NumberFormatter(), onCommit:  {
+                        checkData()
+                      })
+                .modifireTF()
+                .alert(isPresented: $alertPresented, content: {
+                    Alert(title: Text("Wrong format"), message: Text("Enter number from 0 to 255"))
+                })
+        }.padding(10)
     }
     
     private func checkData() {
-        if let number = Double(label) {
-            if number >= 0 && number <= 255 {
-                value = number
-            } else {
-                alertPresented.toggle()
-                label = ""
-            }
-        } else {
+        if value < 0 || value > 255 {
             alertPresented.toggle()
-            label = ""
+            value = 0
         }
+    }
+}
+
+struct TextFieldModifire: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .frame(width: 50, height: 40)
+            .multilineTextAlignment(.trailing)
+    }
+}
+
+extension TextField {
+    func modifireTF() -> some View {
+        ModifiedContent(content: self, modifier: TextFieldModifire())
     }
 }

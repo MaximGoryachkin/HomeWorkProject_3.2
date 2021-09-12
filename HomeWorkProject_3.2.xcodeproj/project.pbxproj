@@ -11,7 +11,6 @@
 		B5A2138926ED0EAB00A539CC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A2138826ED0EAB00A539CC /* ContentView.swift */; };
 		B5A2138B26ED0EAC00A539CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A2138A26ED0EAC00A539CC /* Assets.xcassets */; };
 		B5A2138E26ED0EAC00A539CC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A2138D26ED0EAC00A539CC /* Preview Assets.xcassets */; };
-		B5A2139726ED0F2600A539CC /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A2139626ED0F2600A539CC /* SliderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,7 +20,6 @@
 		B5A2138A26ED0EAC00A539CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5A2138D26ED0EAC00A539CC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B5A2138F26ED0EAC00A539CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B5A2139626ED0F2600A539CC /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +54,6 @@
 			children = (
 				B5A2138626ED0EAB00A539CC /* HomeWorkProject_3_2App.swift */,
 				B5A2138826ED0EAB00A539CC /* ContentView.swift */,
-				B5A2139626ED0F2600A539CC /* SliderView.swift */,
 				B5A2138A26ED0EAC00A539CC /* Assets.xcassets */,
 				B5A2138F26ED0EAC00A539CC /* Info.plist */,
 				B5A2138C26ED0EAC00A539CC /* Preview Content */,
@@ -141,7 +138,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5A2139726ED0F2600A539CC /* SliderView.swift in Sources */,
 				B5A2138926ED0EAB00A539CC /* ContentView.swift in Sources */,
 				B5A2138726ED0EAB00A539CC /* HomeWorkProject_3_2App.swift in Sources */,
 			);
