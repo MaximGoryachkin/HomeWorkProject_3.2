@@ -11,6 +11,9 @@ struct ContentView: View {
     @State private var redValue = 0.0
     @State private var greenValue = 0.0
     @State private var blueValue = 0.0
+    @State private var redValueText = "0"
+    @State private var greenValueText = "0"
+    @State private var blueValueText = "0"
     @State private var alertPresented = false
     
     
@@ -25,12 +28,15 @@ struct ContentView: View {
                     .frame(height: 200)
                     .foregroundColor(Color(red: redValue / 255.0, green: greenValue / 255.0, blue: blueValue / 255.0))
                 SettingsView(value: $redValue,
+                             text: $redValueText,
                              alertPresented: $alertPresented,
                              color: .red)
                 SettingsView(value: $greenValue,
+                             text: $greenValueText,
                              alertPresented: $alertPresented,
                              color: .green)
                 SettingsView(value: $blueValue,
+                             text: $blueValueText,
                              alertPresented: $alertPresented,
                              color: .blue)
                 Spacer()
@@ -47,6 +53,7 @@ struct ContentView_Previews: PreviewProvider {
 
 struct SettingsView: View {
     @Binding var value: Double
+    @Binding var text: String
     @Binding var alertPresented: Bool
     let color: Color
     
@@ -57,12 +64,13 @@ struct SettingsView: View {
                 .foregroundColor(.white)
             Slider(value: $value,
                    in: 0...255,
-                   step: 1)
-                .animation(.default)
-                .accentColor(color)
+                   step: 1) { _ in
+                text = String(lround(value))
+            }
+            .animation(.default)
+            .accentColor(color)
             TextField("255",
-                      value: $value,
-                      formatter: NumberFormatter(), onCommit:  {
+                      text: $text, onCommit:  {
                         checkData()
                       })
                 .modifireTF()
@@ -73,10 +81,20 @@ struct SettingsView: View {
     }
     
     private func checkData() {
-        if value < 0 || value > 255 {
-            alertPresented.toggle()
-            value = 0
+        if let number = Double(text) {
+            if number >= 0 && number <= 255 {
+                value = number
+            } else {
+                alertPresenting()
+            }
+        } else {
+            alertPresenting()
         }
+    }
+    
+    private func alertPresenting() {
+        alertPresented.toggle()
+        text = String(lround(value))
     }
 }
 
